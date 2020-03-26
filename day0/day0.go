@@ -2,6 +2,8 @@ package dayXXX
 
 import (
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/pbavinck/AofCod2019/loader"
 )
@@ -24,12 +26,15 @@ func SolvePart2() int {
 
 // Solve runs day XXX assignment
 func Solve() {
-	fmt.Printf("\n*** DAY XXX : Part 1 ***\n")
-	data := loader.ReadIntsFromFile(inputFile, false)
-	fmt.Printf("%v line(s) read from input\n", len(data))
+	// log.SetOutput(ioutil.Discard)
+	log.SetOutput(os.Stderr)
+
+	fmt.Printf("\n*** DAY XXX ***\n")
+	data := loader.ReadStringsFromFile(inputFile, false)
+	fmt.Printf("%v line(s) in input\n", len(data))
 
 	SolvePart1()
 
-	fmt.Printf("\n*** DAY XXX : Part 2 ***\n")
+	data := loader.ReadStringsFromFile(inputFile, false)
 	SolvePart2()
 }

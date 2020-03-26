@@ -2,6 +2,8 @@ package day4
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"strconv"
 )
 
@@ -58,7 +60,7 @@ func forceIncrease(a int) int {
 func generatePasswords(start, end int, isPart2 bool) int {
 	result := 0
 	b := forceIncrease(start)
-	fmt.Printf("From: %6v, To:%6v\n", start, end)
+	log.Printf("From: %6v, To:%6v\n", start, end)
 
 	for {
 		if b > end {
@@ -78,23 +80,24 @@ func generatePasswords(start, end int, isPart2 bool) int {
 //SolvePart1 solves part 1 of day 4
 func SolvePart1() int {
 	result := generatePasswords(rangeStart, rangeEnd, false)
-	fmt.Println("Answer (Part 1): ", result)
+	fmt.Println("Part 1 - Passwords found: ", result)
 	return result
 }
 
 //SolvePart2 solves part 2 of day 4
 func SolvePart2() int {
 	result := generatePasswords(rangeStart, rangeEnd, true)
-	fmt.Println("Answer (Part 2): ", result)
+	fmt.Println("Part 2 - Passwords found: ", result)
 	return result
 }
 
 // Solve runs day 4 assignment
 func Solve() {
-	fmt.Printf("\n*** DAY 4 : Part 1 ***\n")
+	log.SetOutput(ioutil.Discard)
+	// log.SetOutput(os.Stderr)
+
+	fmt.Printf("\n*** DAY 4\n")
 
 	SolvePart1()
-
-	fmt.Printf("\n*** DAY 4 : Part 2 ***\n")
 	SolvePart2()
 }

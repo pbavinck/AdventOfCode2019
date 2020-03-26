@@ -197,12 +197,11 @@ func solvePart1(s []string) int {
 	wire1 := createWire(s[1], 1)
 	intersections := findIntersections(wire0, wire1)
 	bestPosition, bestDistance := findClosestIntersection(intersections)
-	fmt.Printf("Closest intersection: (%v, %v) with distance: %v\n", bestPosition.x, bestPosition.y, bestDistance)
+	fmt.Printf("Part 1 - Closest intersection: (%v, %v) with distance: %v\n", bestPosition.x, bestPosition.y, bestDistance)
 	return bestDistance
 }
 
 func solvePart2(s []string) int {
-	fmt.Println("\n*** DAY 3 : Part 2 ***")
 	wire0 := createWire(s[0], 0)
 	wire1 := createWire(s[1], 1)
 	intersections := findIntersections(wire0, wire1)
@@ -212,15 +211,15 @@ func solvePart2(s []string) int {
 	var bestPosition coord
 	var bestSteps int
 	bestPosition, bestSteps = getLowestSteps(intersections)
-	fmt.Printf("Lowest step count: (%v, %v) with steps: %v\n", bestPosition.x, bestPosition.y, bestSteps)
+	fmt.Printf("Part 2 - Lowest step count: (%v, %v) with steps: %v\n", bestPosition.x, bestPosition.y, bestSteps)
 	return bestSteps
 }
 
 // Solve solves the Day 3 assignments
 func Solve() {
-	fmt.Println("\n*** DAY 3 : Part 1 ***")
+	fmt.Println("\n*** DAY 3 ***")
 	s := loader.ReadStringsFromFile(inputFile, false)
-	fmt.Printf("%v line(s) read from input\n", len(s))
+	fmt.Printf("%v line(s) in input\n", len(s))
 	solvePart1(s)
 	solvePart2(s)
 }

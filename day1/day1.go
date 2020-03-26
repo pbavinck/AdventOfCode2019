@@ -21,7 +21,7 @@ func SolvePart1(data []int) int {
 		totalFuel += fuel
 	}
 
-	fmt.Println("Total (Part 1): ", strconv.Itoa(totalFuel))
+	fmt.Println("Part 1 - Total fuel:", strconv.Itoa(totalFuel))
 	return totalFuel
 }
 
@@ -43,19 +43,18 @@ func SolvePart2(data []int) int {
 		totalFuel += fuel
 	}
 
-	fmt.Println("Total (Part 2): ", strconv.Itoa(totalFuel))
+	fmt.Println("Part 2 - Total fuel:", strconv.Itoa(totalFuel))
 	return totalFuel
 
 }
 
 // Solve runs day 1 assignment
 func Solve() {
-	fmt.Printf("\n*** DAY 1 : Part 1 ***")
+	fmt.Printf("\n*** DAY 1 ***\n")
 	data := loader.ReadIntsFromFile(inputFile, false)
+	fmt.Printf("%v line(s) in input\n", len(data))
 
-	fmt.Printf("%v line(s) read from input\n", len(data))
 	SolvePart1(data)
 
-	fmt.Println("\n*** DAY 1 : Part 2 ***")
 	SolvePart2(data)
 }

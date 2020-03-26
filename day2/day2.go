@@ -61,21 +61,19 @@ func testProgram(lines []string, in1, in2 int) string {
 
 // SolvePart1 solves part 1 of Day 2 assignment
 func SolvePart1() {
-	fmt.Println("\n*** DAY 2 : Part 1 ***")
 	s := loader.ReadStringsFromFile(inputFile, false)
-	fmt.Printf("%v line(s) read from input\n", len(s))
+	fmt.Printf("%v line(s) in input\n", len(s))
 
-	fmt.Printf("Answer Part 1: %v\n", testProgram(s, 12, 2))
+	fmt.Printf("Part 1 - Answer: %v\n", testProgram(s, 12, 2))
 }
 
 // SolvePart2 solves part 2 of Day 2 assignment
 func SolvePart2() {
-	fmt.Println("\n*** DAY 2 : Part 2 ***")
 	for noun := 0; noun < 100; noun++ {
 		for verb := 0; verb < 100; verb++ {
 			s := loader.ReadStringsFromFile(inputFile, false)
 			if output := testProgram(s, noun, verb); output == "19690720" {
-				fmt.Printf("Answer Part 2: %v (noun: %v, verb: %v)\n", 100*noun+verb, noun, verb)
+				fmt.Printf("Part 2 - Answer: %v (noun: %v, verb: %v)\n", 100*noun+verb, noun, verb)
 				return
 			}
 		}
@@ -84,6 +82,7 @@ func SolvePart2() {
 
 //Solve solves the the day2 puzzle
 func Solve() {
+	fmt.Println("\n*** DAY 2 ***")
 	SolvePart1()
 	SolvePart2()
 }
