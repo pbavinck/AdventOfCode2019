@@ -183,7 +183,7 @@ func Solve() {
 
 	fmt.Printf("\n*** DAY 5 ***\n")
 	data := loader.ReadStringsFromFile(inputFile, false)
-	fmt.Printf("%v line(s) in input\n\n", len(data))
+	fmt.Printf("%v line(s) in input\n", len(data))
 
 	code := strings.Split(data[0], ",")
 	SolvePart1(code)

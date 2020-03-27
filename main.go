@@ -6,6 +6,7 @@ import (
 	"github.com/pbavinck/AofCod2019/day3"
 	"github.com/pbavinck/AofCod2019/day4"
 	"github.com/pbavinck/AofCod2019/day5"
+	"github.com/pbavinck/AofCod2019/day6"
 )
 
 func main() {
@@ -14,4 +15,5 @@ func main() {
 	day3.Solve()
 	day4.Solve()
 	day5.Solve()
+	day6.Solve()
 }
