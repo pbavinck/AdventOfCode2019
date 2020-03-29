@@ -2,7 +2,6 @@ package day5
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"strconv"
 	"strings"
@@ -167,23 +166,19 @@ func run(code []string, input string) int {
 
 //SolvePart1 solves part 1 of day 5
 func SolvePart1(code []string) {
-	fmt.Println("Part 1 - Program output: ", run(code, string("1")))
+	fmt.Println("Part 1 - Program output:", run(code, string("1")))
 }
 
 //SolvePart2 solves part 2 of day 5
 func SolvePart2(code []string) {
-	fmt.Println("Part 2 - Program output: ", run(code, string("5")))
+	fmt.Println("Part 2 - Program output:", run(code, string("5")))
 
 }
 
 // Solve runs day 5 assignment
 func Solve() {
-	log.SetOutput(ioutil.Discard)
-	// log.SetOutput(os.Stderr)
-
 	fmt.Printf("\n*** DAY 5 ***\n")
 	data := loader.ReadStringsFromFile(inputFile, false)
-	fmt.Printf("%v line(s) in input\n", len(data))
 
 	code := strings.Split(data[0], ",")
 	SolvePart1(code)

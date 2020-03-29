@@ -52,9 +52,6 @@ func SolvePart2(data []int) int {
 func Solve() {
 	fmt.Printf("\n*** DAY 1 ***\n")
 	data := loader.ReadIntsFromFile(inputFile, false)
-	fmt.Printf("%v line(s) in input\n", len(data))
-
 	SolvePart1(data)
-
 	SolvePart2(data)
 }

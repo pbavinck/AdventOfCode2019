@@ -2,7 +2,6 @@ package day6
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 
 	"github.com/pbavinck/AofCod2019/loader"
@@ -93,23 +92,19 @@ func (u aUniverse) countJumpsToSanta() int {
 
 //SolvePart1 solves part 1 of day 6
 func SolvePart1(u aUniverse) {
-	fmt.Println("Answer (Part 1): ", u.countOrbits())
+	fmt.Println("Part 2 - Answer:", u.countOrbits())
 }
 
 //SolvePart2 solves part 2 of day 6
 func SolvePart2(u aUniverse) {
 	// we counted both the "YOU to planet" jump and the "Santa to planet" jump, so subtract 2
-	fmt.Println("Answer (Part 2): ", u.countJumpsToSanta()-2)
+	fmt.Println("Part 2 - Answer:", u.countJumpsToSanta()-2)
 }
 
 // Solve runs day 6 assignment
 func Solve() {
-	log.SetOutput(ioutil.Discard)
-	// log.SetOutput(os.Stderr)
-
 	fmt.Printf("\n*** DAY 6 ***\n")
 	data := loader.ReadStringsFromFile(inputFile, false)
-	fmt.Printf("%v line(s) in input\n", len(data))
 
 	universe := make(aUniverse)
 	universe.load(data)

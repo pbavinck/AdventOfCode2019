@@ -2,8 +2,6 @@ package dayXXX
 
 import (
 	"fmt"
-	"log"
-	"os"
 
 	"github.com/pbavinck/AofCod2019/loader"
 )
@@ -11,28 +9,25 @@ import (
 const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCod2019/dayXXX/input.txt"
 
 //SolvePart1 solves part 1 of day XXX
-func SolvePart1() {
+func SolvePart1(data []string) {
 	result := 0
-	fmt.Println("Answer (Part 1): ", result)
+	fmt.Println("Part 1 - Answer:", result)
 }
 
 //SolvePart2 solves part 2 of day XXX
-func SolvePart2() {
+func SolvePart2(data []string) {
 	result := 0
-	fmt.Println("Answer (Part 2): ", result)
+	fmt.Println("Part 2 - Answer:", result)
 }
 
 // Solve runs day XXX assignment
 func Solve() {
-	// log.SetOutput(ioutil.Discard)
-	log.SetOutput(os.Stderr)
-
 	fmt.Printf("\n*** DAY XXX ***\n")
 	data := loader.ReadStringsFromFile(inputFile, false)
-	fmt.Printf("%v line(s) in input\n", len(data))
 
-	SolvePart1()
+	SolvePart1(data)
 
-	data = loader.ReadStringsFromFile(inputFile, false)
-	SolvePart2()
+	// uncomment if you need to reinitialize based on data
+	// data = loader.ReadStringsFromFile(inputFile, false)
+	SolvePart2(data)
 }

@@ -62,8 +62,6 @@ func testProgram(lines []string, in1, in2 int) string {
 // SolvePart1 solves part 1 of Day 2 assignment
 func SolvePart1() {
 	s := loader.ReadStringsFromFile(inputFile, false)
-	fmt.Printf("%v line(s) in input\n", len(s))
-
 	fmt.Printf("Part 1 - Answer: %v\n", testProgram(s, 12, 2))
 }
 

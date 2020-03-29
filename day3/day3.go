@@ -218,8 +218,7 @@ func solvePart2(s []string) int {
 // Solve solves the Day 3 assignments
 func Solve() {
 	fmt.Println("\n*** DAY 3 ***")
-	s := loader.ReadStringsFromFile(inputFile, false)
-	fmt.Printf("%v line(s) in input\n", len(s))
-	solvePart1(s)
-	solvePart2(s)
+	data := loader.ReadStringsFromFile(inputFile, false)
+	solvePart1(data)
+	solvePart2(data)
 }

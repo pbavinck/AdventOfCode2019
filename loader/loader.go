@@ -28,9 +28,10 @@ func ReadStringsFromFile(filepath string, showLoaded bool) []string {
 	}
 
 	if showLoaded {
-		fmt.Println("Data loaded:")
+		log.Printf("%v line(s) in input\n", len(input))
+		log.Println("Data loaded:")
 		for i := range input {
-			fmt.Println(i, input[i])
+			log.Println(i, input[i])
 		}
 	}
 
@@ -67,5 +68,6 @@ func ReadIntsFromFile(filepath string, showLoaded bool) []int {
 		}
 	}
 
+	log.Printf("%v line(s) in input\n", len(input))
 	return input
 }
