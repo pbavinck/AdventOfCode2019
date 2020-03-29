@@ -26,77 +26,81 @@ func (c *Computer) getParamValue(line int, paramIndex int) int {
 		return r
 	}
 
-	// Immediate
+	// Immediate mode
 	r, _ := strconv.Atoi(c.program[line+paramIndex+1])
 	log.Printf("%v       Param %v == %-6v (immediate).\n", c.name, paramIndex, r)
 	return r
 }
 
-func (c *Computer) add(line int) (nextline int) {
+func (c *Computer) add(line int) (nextLine int) {
 	log.Printf("%v%+5v: Opcode: %v (ADD)\n", string(c.name[0]), line, c.program[line])
 	a := c.getParamValue(line, 0)
 	b := c.getParamValue(line, 1)
 	targetIndex, _ := strconv.Atoi(c.program[line+3])
 	c.program[targetIndex] = strconv.Itoa(a + b)
 	log.Printf("%v       Param 2 == %-6v (output   ). line[%v] set to value: %v (%v + %v)\n", c.name, targetIndex, targetIndex, strconv.Itoa(a+b), a, b)
-	return line + 4
+	nextLine = line + 4
+	return
 }
 
-func (c *Computer) multiply(line int) (nextline int) {
+func (c *Computer) multiply(line int) (nextLine int) {
 	log.Printf("%v%+5v: Opcode: %v (MULTIPLY)\n", string(c.name[0]), line, c.program[line])
 	a := c.getParamValue(line, 0)
 	b := c.getParamValue(line, 1)
 	targetIndex, _ := strconv.Atoi(c.program[line+3])
 	c.program[targetIndex] = strconv.Itoa(a * b)
 	log.Printf("%v       Param 2 == %-6v (output). line[%v] set to value: %v (%v * %v)\n", c.name, targetIndex, targetIndex, strconv.Itoa(a*b), a, b)
-	return line + 4
+	nextLine = line + 4
+	return
 }
 
-func (c *Computer) in(line int, input string) (nextline int) {
+func (c *Computer) in(line int, input string) (nextLine int) {
 	log.Printf("%v%+5v: Opcode: %v (INPUT)\n", string(c.name[0]), line, c.program[line])
 	targetIndex, _ := strconv.Atoi(c.program[line+1])
 	c.program[targetIndex] = input
 	log.Printf("%v       Input == %v\n", c.name, input)
 	log.Printf("%v       Param 0 == %-6v (output). line[%v] set to value: %v\n", c.name, targetIndex, targetIndex, input)
-	return line + 2
+	nextLine = line + 2
+	return
 }
 
-func (c *Computer) out(line int) (nextline int, output int) {
+func (c *Computer) out(line int) (nextLine int, output int) {
 	log.Printf("%v%+5v: Opcode: %v (OUTPUT)\n", string(c.name[0]), line, c.program[line])
-	a := c.getParamValue(line, 0)
-	log.Printf("%v -> Output: %v\n", c.name, a)
-	return line + 2, a
+	output = c.getParamValue(line, 0)
+	log.Printf("%v -> Output: %v\n", c.name, output)
+	nextLine = line + 2
+	return
 }
 
-func (c *Computer) jumpIfTrue(line int) (nextline int) {
+func (c *Computer) jumpIfTrue(line int) (nextLine int) {
 	log.Printf("%v%+5v: Opcode: %v (JUMP_IF_TRUE)\n", string(c.name[0]), line, c.program[line])
 	a := c.getParamValue(line, 0)
 	b := c.getParamValue(line, 1)
 	if a != 0 {
-		nextline = b
-		log.Printf("%v       JUMP to %-6v\n", c.name, nextline)
+		nextLine = b
+		log.Printf("%v       JUMP to %-6v\n", c.name, nextLine)
 	} else {
-		nextline = line + 3
+		nextLine = line + 3
 		log.Printf("%v       NO JUMP\n", c.name)
 	}
-	return nextline
+	return
 }
 
-func (c *Computer) jumpIfFalse(line int) (nextline int) {
+func (c *Computer) jumpIfFalse(line int) (nextLine int) {
 	log.Printf("%v%+5v: Opcode: %v (JUMP_IF_FALSE)\n", string(c.name[0]), line, c.program[line])
 	a := c.getParamValue(line, 0)
 	b := c.getParamValue(line, 1)
 	if a == 0 {
-		nextline = b
-		log.Printf("%v       JUMP to %+6v\n", c.name, nextline)
+		nextLine = b
+		log.Printf("%v       JUMP to %+6v\n", c.name, nextLine)
 	} else {
-		nextline = line + 3
+		nextLine = line + 3
 		log.Printf("%v       NO JUMP\n", c.name)
 	}
-	return nextline
+	return
 }
 
-func (c *Computer) lessThan(line int) (nextline int) {
+func (c *Computer) lessThan(line int) (nextLine int) {
 	log.Printf("%v%+5v: Opcode: %v (LESS_THAN)\n", string(c.name[0]), line, c.program[line])
 	a := c.getParamValue(line, 0)
 	b := c.getParamValue(line, 1)
@@ -107,10 +111,11 @@ func (c *Computer) lessThan(line int) (nextline int) {
 		c.program[targetIndex] = string("0")
 	}
 	log.Printf("        Param 3 == %-6v (output). line[%v] set to %v\n", targetIndex, targetIndex, c.program[targetIndex])
-	return line + 4
+	nextLine = line + 4
+	return
 }
 
-func (c *Computer) equal(line int) (nextline int) {
+func (c *Computer) equal(line int) (nextLine int) {
 	log.Printf("%v%+5v: Opcode: %v (EQUAL_TO)\n", string(c.name[0]), line, c.program[line])
 	a := c.getParamValue(line, 0)
 	b := c.getParamValue(line, 1)
@@ -121,7 +126,8 @@ func (c *Computer) equal(line int) (nextline int) {
 		c.program[targetIndex] = string("0")
 	}
 	log.Printf("        Param 3 == %-6v (output). line[%v] set to %v\n", targetIndex, targetIndex, c.program[targetIndex])
-	return line + 4
+	nextLine = line + 4
+	return
 }
 
 // SetLineValue enables setting the value of a single line
@@ -149,12 +155,8 @@ func (c *Computer) Run(wg *sync.WaitGroup) string {
 		case operation == "02":
 			line = c.multiply(line)
 		case operation == "03":
-			// input := c.input[inputIndex]
-			// inputIndex++
-			// line = c.in(line, input)
 			line = c.in(line, <-c.Input)
 		case operation == "04":
-			// line, output = c.out(line)
 			line, output = c.out(line)
 			c.Output <- strconv.Itoa(output)
 		case operation == "05":
@@ -193,8 +195,9 @@ func NewComputer(name string, data []string) *Computer {
 	c := Computer{
 		name:    name,
 		program: strings.Split(data[0], ","),
-		Input:   make(chan string, 2),
-		Output:  make(chan string, 2),
+		// make the channels have 2 capacity, because day 7 requires, phase and input signal to be passed
+		Input:  make(chan string, 2),
+		Output: make(chan string, 2),
 	}
 	return &c
 }
