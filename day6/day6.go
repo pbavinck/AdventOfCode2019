@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/pbavinck/AofCod2019/loader"
+	"github.com/pbavinck/AofCode2019/loader"
 )
 
-const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCod2019/day6/input.txt"
+const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/day6/input.txt"
 
 type objectInfo struct {
 	name         string

@@ -3,10 +3,10 @@ package dayXXX
 import (
 	"fmt"
 
-	"github.com/pbavinck/AofCod2019/loader"
+	"github.com/pbavinck/AofCode2019/loader"
 )
 
-const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCod2019/dayXXX/input.txt"
+const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/dayXXX/input.txt"
 
 //SolvePart1 solves part 1 of day XXX
 func SolvePart1(data []string) {

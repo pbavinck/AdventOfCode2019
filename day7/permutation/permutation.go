@@ -30,7 +30,7 @@ func (c *Request) GenerateFor(s string) []string {
 	return c.results
 }
 
-// GetResults return all the found permutations
+// GetResults returns all the found permutations
 func (c *Request) getResults() []string {
 	results := make([]string, len(c.results))
 	for i := 0; i < len(c.results); i++ {
@@ -39,7 +39,7 @@ func (c *Request) getResults() []string {
 	return results
 }
 
-//Generate Generates all possible permutations of a string
+//Generate all possible permutations of a string
 func (c *Request) step(depth int) {
 	// only the underlying array of results changes, so return the new copy
 	if depth == len(c.chars) {

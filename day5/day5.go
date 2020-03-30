@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/pbavinck/AofCod2019/loader"
+	"github.com/pbavinck/AofCode2019/loader"
 )
 
-const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCod2019/day5/input.txt"
+const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/day5/input.txt"
 
 func padWithZeros(s string) string {
 	// Adds zeros to opcode

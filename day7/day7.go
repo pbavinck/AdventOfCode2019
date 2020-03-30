@@ -6,12 +6,12 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/pbavinck/AofCod2019/day7/permutation"
-	"github.com/pbavinck/AofCod2019/loader"
-	"github.com/pbavinck/AofCod2019/machines"
+	"github.com/pbavinck/AofCode2019/day7/permutation"
+	"github.com/pbavinck/AofCode2019/loader"
+	"github.com/pbavinck/AofCode2019/machines"
 )
 
-const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCod2019/day7/input.txt"
+const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/day7/input.txt"
 
 func tryPhase(data []string, phase string, part1 bool) int {
 	var amplifiers [5]*machines.Computer

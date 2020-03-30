@@ -5,12 +5,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/pbavinck/AofCod2019/loader"
+	"github.com/pbavinck/AofCode2019/loader"
 )
 
 // https://adventofcode.com/2019/day/2
 
-const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCod2019/day2/input.txt"
+const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/day2/input.txt"
 
 func testProgram(lines []string, in1, in2 int) string {
 	s := strings.Split(lines[0], ",")

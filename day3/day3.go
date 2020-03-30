@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/pbavinck/AofCod2019/loader"
+	"github.com/pbavinck/AofCode2019/loader"
 )
 
 type coord struct {
@@ -37,7 +37,7 @@ type intersectionsType struct {
 	coordIndex map[coord]int
 }
 
-const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCod2019/day3/input.txt"
+const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/day3/input.txt"
 
 func intAbs(a, b int) int {
 	if a > b {

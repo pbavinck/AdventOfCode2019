@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/pbavinck/AofCod2019/loader"
+	"github.com/pbavinck/AofCode2019/loader"
 )
 
 // https://adventofcode.com/2019/day/1
 
-const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCod2019/day1/input.txt"
+const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/day1/input.txt"
 
 //SolvePart1 solves part 1 of the the day1 puzzle
 func SolvePart1(data []int) int {

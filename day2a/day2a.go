@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/pbavinck/AofCod2019/loader"
-	"github.com/pbavinck/AofCod2019/machines"
+	"github.com/pbavinck/AofCode2019/loader"
+	"github.com/pbavinck/AofCode2019/machines"
 )
 
-const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCod2019/day2/input.txt"
+const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/day2/input.txt"
 
 //SolvePart1 solves part 1 of day 2
 func SolvePart1(data []string) {
