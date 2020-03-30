@@ -172,6 +172,7 @@ func (c *Computer) Run(wg *sync.WaitGroup) string {
 			if wg != nil {
 				wg.Done()
 			}
+			close(c.Output)
 			log.Printf("END OF program %v with output (%v)\n\n", c.name, output)
 			return strconv.Itoa(output)
 		}
@@ -196,8 +197,9 @@ func NewComputer(name string, data []string) *Computer {
 		name:    name,
 		program: strings.Split(data[0], ","),
 		// make the channels have 2 capacity, because day 7 requires, phase and input signal to be passed
-		Input:  make(chan string, 2),
-		Output: make(chan string, 2),
+		Input: make(chan string, 2),
+		// make the channels have 10 capacity, because day 5a requires, 10 output writes
+		Output: make(chan string, 10),
 	}
 	return &c
 }
