@@ -31,7 +31,6 @@ func newImage(data string, width int, height int) *anImage {
 	}
 
 	for l := 0; l < img.layerCount; l++ {
-
 		for r := 0; r < img.height; r++ {
 			for c := 0; c < img.width; c++ {
 				i := l*img.width*img.height + r*img.width + c

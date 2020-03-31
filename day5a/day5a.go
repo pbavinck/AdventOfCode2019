@@ -4,7 +4,6 @@ package day5a
 
 import (
 	"fmt"
-	"log"
 	"sync"
 
 	"github.com/pbavinck/AofCode2019/loader"
@@ -16,34 +15,39 @@ const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/Aof
 //SolvePart1 solves part 1 of day 5
 func SolvePart1(data []string) {
 	var wg sync.WaitGroup
-	c := machines.NewComputer("A", data)
-	c.Input <- "1"
-	wg.Add(1)
-	go c.Run(&wg)
-	wg.Wait()
-	log.Println("Outputs in channel:", len(c.Output))
 	output := ""
-	for output = range c.Output {
-		// read all values from the output channel and remember last one, which is the answer
-	}
+	c := machines.NewComputer("A", data, 0)
+	c.Input <- "1"
+	wg.Add(2)
+	go c.Run(&wg)
+	go func(*machines.Computer, *sync.WaitGroup) {
+		defer wg.Done()
+		// Clear output channel (using output through closure, output will contain the last one)
+		for output = range c.Output {
+			// fmt.Printf("out: %v\n", output)
+		}
+	}(c, &wg)
+	wg.Wait()
 	fmt.Println("Part 1 - Program output:", output)
 }
 
 //SolvePart2 solves part 2 of day 5
 func SolvePart2(data []string) {
 	var wg sync.WaitGroup
-	c := machines.NewComputer("A", data)
-	c.Input <- "5"
-	wg.Add(1)
-	go c.Run(&wg)
-	wg.Wait()
-	log.Println("Outputs in channel:", len(c.Output))
 	output := ""
-	for output = range c.Output {
-		// read all values from the output channel and remember last one, which is the answer
-	}
+	c := machines.NewComputer("A", data, 0)
+	c.Input <- "5"
+	wg.Add(2)
+	go c.Run(&wg)
+	go func(*machines.Computer, *sync.WaitGroup) {
+		defer wg.Done()
+		// Clear output channel (using output through closure, output will contain the last one)
+		for output = range c.Output {
+			// fmt.Printf("out: %v\n", output)
+		}
+	}(c, &wg)
+	wg.Wait()
 	fmt.Println("Part 2 - Program output:", output)
-
 }
 
 // Solve runs day 5 assignment

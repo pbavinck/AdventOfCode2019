@@ -14,6 +14,7 @@ import (
 	"github.com/pbavinck/AofCode2019/day6"
 	"github.com/pbavinck/AofCode2019/day7"
 	"github.com/pbavinck/AofCode2019/day8"
+	"github.com/pbavinck/AofCode2019/day9"
 )
 
 func main() {
@@ -30,4 +31,11 @@ func main() {
 	day6.Solve()
 	day7.Solve()
 	day8.Solve()
+	day9.Solve()
+
+	// Compute days
+	// day2a.Solve()
+	// day5a.Solve()
+	// day7.Solve()
+	// day9.Solve()
 }

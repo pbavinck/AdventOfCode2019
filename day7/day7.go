@@ -17,7 +17,7 @@ func tryPhase(data []string, phase string, part1 bool) int {
 	var amplifiers [5]*machines.Computer
 	for i := 0; i < len(amplifiers); i++ {
 		// Create and start computers
-		amplifiers[i] = machines.NewComputer(string(65+i), data)
+		amplifiers[i] = machines.NewComputer(string(65+i), data, 0)
 
 		// Connect amps
 		if i > 0 {

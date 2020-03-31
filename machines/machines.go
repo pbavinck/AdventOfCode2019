@@ -10,10 +10,11 @@ import (
 
 // Computer The computer to run the code
 type Computer struct {
-	name    string
-	program []string
-	Input   chan string
-	Output  chan string
+	name         string
+	program      []string
+	relativeBase int
+	Input        chan string
+	Output       chan string
 }
 
 func (c *Computer) getParamValue(line int, paramIndex int) int {
@@ -26,17 +27,46 @@ func (c *Computer) getParamValue(line int, paramIndex int) int {
 		return r
 	}
 
+	if paramMode(opcode, paramIndex) == "2" {
+		//relative mode
+		index, _ := strconv.Atoi(c.program[line+paramIndex+1])
+		r, _ := strconv.Atoi(c.program[c.relativeBase+index])
+		log.Printf("%v       Param %v == %-6v (relative ). Base at %v, line[%v + %v] has value: %v\n", c.name, paramIndex, index, c.relativeBase, c.relativeBase, index, r)
+		return r
+	}
+
 	// Immediate mode
 	r, _ := strconv.Atoi(c.program[line+paramIndex+1])
 	log.Printf("%v       Param %v == %-6v (immediate).\n", c.name, paramIndex, r)
 	return r
 }
 
+func (c *Computer) getTargetIndex(line int, paramIndex int) int {
+	opcode := c.program[line]
+	if paramMode(opcode, paramIndex) == "0" {
+		//postion mode
+		index, _ := strconv.Atoi(c.program[line+paramIndex+1])
+		log.Printf("%v       Param %v == %-6v (position ). Target line: %v\n", c.name, paramIndex, index, index)
+		return index
+	}
+
+	if paramMode(opcode, paramIndex) == "2" {
+		//relative mode
+		index, _ := strconv.Atoi(c.program[line+paramIndex+1])
+		log.Printf("%v       Param %v == %-6v (relative ). Base at %v, target line: %v + %v = %v\n", c.name, paramIndex, index, c.relativeBase, c.relativeBase, index, c.relativeBase+index)
+		index = c.relativeBase + index
+		return index
+	}
+
+	log.Fatal("Invalid param mode for terget index")
+	return -1
+}
+
 func (c *Computer) add(line int) (nextLine int) {
 	log.Printf("%v%+5v: Opcode: %v (ADD)\n", string(c.name[0]), line, c.program[line])
 	a := c.getParamValue(line, 0)
 	b := c.getParamValue(line, 1)
-	targetIndex, _ := strconv.Atoi(c.program[line+3])
+	targetIndex := c.getTargetIndex(line, 2)
 	c.program[targetIndex] = strconv.Itoa(a + b)
 	log.Printf("%v       Param 2 == %-6v (output   ). line[%v] set to value: %v (%v + %v)\n", c.name, targetIndex, targetIndex, strconv.Itoa(a+b), a, b)
 	nextLine = line + 4
@@ -47,7 +77,7 @@ func (c *Computer) multiply(line int) (nextLine int) {
 	log.Printf("%v%+5v: Opcode: %v (MULTIPLY)\n", string(c.name[0]), line, c.program[line])
 	a := c.getParamValue(line, 0)
 	b := c.getParamValue(line, 1)
-	targetIndex, _ := strconv.Atoi(c.program[line+3])
+	targetIndex := c.getTargetIndex(line, 2)
 	c.program[targetIndex] = strconv.Itoa(a * b)
 	log.Printf("%v       Param 2 == %-6v (output). line[%v] set to value: %v (%v * %v)\n", c.name, targetIndex, targetIndex, strconv.Itoa(a*b), a, b)
 	nextLine = line + 4
@@ -56,7 +86,7 @@ func (c *Computer) multiply(line int) (nextLine int) {
 
 func (c *Computer) in(line int, input string) (nextLine int) {
 	log.Printf("%v%+5v: Opcode: %v (INPUT)\n", string(c.name[0]), line, c.program[line])
-	targetIndex, _ := strconv.Atoi(c.program[line+1])
+	targetIndex := c.getTargetIndex(line, 0)
 	c.program[targetIndex] = input
 	log.Printf("%v       Input == %v\n", c.name, input)
 	log.Printf("%v       Param 0 == %-6v (output). line[%v] set to value: %v\n", c.name, targetIndex, targetIndex, input)
@@ -104,13 +134,13 @@ func (c *Computer) lessThan(line int) (nextLine int) {
 	log.Printf("%v%+5v: Opcode: %v (LESS_THAN)\n", string(c.name[0]), line, c.program[line])
 	a := c.getParamValue(line, 0)
 	b := c.getParamValue(line, 1)
-	targetIndex, _ := strconv.Atoi(c.program[line+3])
+	targetIndex := c.getTargetIndex(line, 2)
 	if a < b {
 		c.program[targetIndex] = string("1")
 	} else {
 		c.program[targetIndex] = string("0")
 	}
-	log.Printf("        Param 3 == %-6v (output). line[%v] set to %v\n", targetIndex, targetIndex, c.program[targetIndex])
+	log.Printf("%v       Param 3 == %-6v (output). line[%v] set to %v\n", c.name, targetIndex, targetIndex, c.program[targetIndex])
 	nextLine = line + 4
 	return
 }
@@ -119,14 +149,23 @@ func (c *Computer) equal(line int) (nextLine int) {
 	log.Printf("%v%+5v: Opcode: %v (EQUAL_TO)\n", string(c.name[0]), line, c.program[line])
 	a := c.getParamValue(line, 0)
 	b := c.getParamValue(line, 1)
-	targetIndex, _ := strconv.Atoi(c.program[line+3])
+	targetIndex := c.getTargetIndex(line, 2)
 	if a == b {
 		c.program[targetIndex] = string("1")
 	} else {
 		c.program[targetIndex] = string("0")
 	}
-	log.Printf("        Param 3 == %-6v (output). line[%v] set to %v\n", targetIndex, targetIndex, c.program[targetIndex])
+	log.Printf("%v       Param 3 == %-6v (output). line[%v] set to %v\n", c.name, targetIndex, targetIndex, c.program[targetIndex])
 	nextLine = line + 4
+	return
+}
+
+func (c *Computer) base(line int) (nextLine int) {
+	log.Printf("%v%+5v: Opcode: %v (SET_BASE)\n", string(c.name[0]), line, c.program[line])
+	a := c.getParamValue(line, 0)
+	c.relativeBase = c.relativeBase + a
+	log.Printf("%v       BASE now %v\n", c.name, c.relativeBase)
+	nextLine = line + 2
 	return
 }
 
@@ -167,7 +206,8 @@ func (c *Computer) Run(wg *sync.WaitGroup) string {
 			line = c.lessThan(line)
 		case operation == "08":
 			line = c.equal(line)
-		// case operation == "99":
+		case operation == "09":
+			line = c.base(line)
 		default:
 			if wg != nil {
 				wg.Done()
@@ -192,14 +232,18 @@ func paramMode(opcode string, index int) string {
 }
 
 // NewComputer creates a new computer and loads the provided program
-func NewComputer(name string, data []string) *Computer {
+func NewComputer(name string, data []string, memorySize int) *Computer {
 	c := Computer{
-		name:    name,
-		program: strings.Split(data[0], ","),
+		name:         name,
+		program:      strings.Split(data[0], ","),
+		relativeBase: 0,
 		// make the channels have 2 capacity, because day 7 requires, phase and input signal to be passed
 		Input: make(chan string, 2),
-		// make the channels have 10 capacity, because day 5a requires, 10 output writes
-		Output: make(chan string, 10),
+		// make the channels have 2 capacity, because day 7 requires it
+		Output: make(chan string, 2),
+	}
+	if memorySize > len(c.program) {
+		c.program = append(c.program, make([]string, memorySize-len(c.program))...)
 	}
 	return &c
 }

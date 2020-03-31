@@ -14,7 +14,7 @@ const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/Aof
 
 //SolvePart1 solves part 1 of day 2
 func SolvePart1(data []string) {
-	c := machines.NewComputer("A", data)
+	c := machines.NewComputer("A", data, 0)
 	c.SetLineValue(1, "12")
 	c.SetLineValue(2, "2")
 	c.Run(nil)
@@ -27,7 +27,7 @@ func SolvePart1(data []string) {
 func SolvePart2(data []string) {
 	for noun := 0; noun < 100; noun++ {
 		for verb := 0; verb < 100; verb++ {
-			c := machines.NewComputer("B", data)
+			c := machines.NewComputer("B", data, 0)
 			c.SetLineValue(1, strconv.Itoa(noun))
 			c.SetLineValue(2, strconv.Itoa(verb))
 			c.Run(nil)
