@@ -1,13 +1,11 @@
 package main
 
 import (
-	"io/ioutil"
-	"log"
-
 	"github.com/pbavinck/AofCode2019/day1"
 	"github.com/pbavinck/AofCode2019/day10"
 	"github.com/pbavinck/AofCode2019/day11"
 	"github.com/pbavinck/AofCode2019/day12"
+	"github.com/pbavinck/AofCode2019/day13"
 	"github.com/pbavinck/AofCode2019/day2"
 	"github.com/pbavinck/AofCode2019/day2a"
 	"github.com/pbavinck/AofCode2019/day3"
@@ -21,8 +19,8 @@ import (
 )
 
 func main() {
-	log.SetOutput(ioutil.Discard)
-	// log.SetOutput(os.Stderr)
+	// lg.Enable()
+	// lg.SetLevel(lg.InfoLevel)
 
 	day1.Solve()
 	day2.Solve()
@@ -38,10 +36,13 @@ func main() {
 	day10.Solve()
 	day11.Solve()
 	day12.Solve()
+	day13.Solve()
 
-	// Compute days
+	// Computer days
 	// day2a.Solve()
 	// day5a.Solve()
 	// day7.Solve()
 	// day9.Solve()
+	// day11.Solve()
+	// day13.Solve()
 }

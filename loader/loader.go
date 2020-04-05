@@ -2,10 +2,11 @@ package loader
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
+
+	"github.com/pbavinck/lg"
 )
 
 // ReadStringsFromFile reads the file and returns a []string
@@ -28,13 +29,14 @@ func ReadStringsFromFile(filepath string, showLoaded bool) []string {
 	}
 
 	if showLoaded {
-		log.Printf("%v line(s) in input\n", len(input))
-		log.Println("Data loaded:")
+		lg.Debug("%v line(s) in input\n", len(input))
+		lg.Debug("Data loaded:")
 		for i := range input {
-			log.Println(i, input[i])
+			lg.Debug("%v %v", i, input[i])
 		}
 	}
 
+	lg.Info("%v line(s) in input\n", len(input))
 	return input
 }
 
@@ -62,12 +64,12 @@ func ReadIntsFromFile(filepath string, showLoaded bool) []int {
 	}
 
 	if showLoaded {
-		fmt.Println("Data loaded:")
+		lg.Debug("Data loaded:")
 		for i := range input {
-			fmt.Println(i, input[i])
+			lg.Debug("%v %v", i, input[i])
 		}
 	}
 
-	log.Printf("%v line(s) in input\n", len(input))
+	lg.Info("%v line(s) in input\n", len(input))
 	return input
 }

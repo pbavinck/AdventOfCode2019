@@ -71,7 +71,7 @@ func (r *robot) print() {
 		canvas[-r.yMin+c.y][-r.xMin+c.x] = r.surface[c]
 	}
 
-	started := false
+	started := false				
 	for y := range canvas {
 		s := ""
 		for x := range canvas[y] {
@@ -110,7 +110,6 @@ func (r *robot) paint(colorCode string) {
 	r.xMax = intMax(r.xMax, r.position.x)
 	r.yMin = intMin(r.yMin, r.position.y)
 	r.yMax = intMax(r.yMax, r.position.y)
-
 }
 
 func (r *robot) turn(direction string) {

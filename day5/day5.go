@@ -2,14 +2,28 @@ package day5
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 
 	"github.com/pbavinck/AofCode2019/loader"
+	"github.com/pbavinck/lg"
 )
 
 const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/day5/input.txt"
+
+// LogGroup The default log group this packages logs to
+var LogGroup = "D5"
+
+// LogTagInfo Used to prefix info log items
+var LogTagInfo int
+
+// LogTagDebug Used to prefix debug log items
+var LogTagDebug int
+
+func init() {
+	LogTagInfo, _ = lg.CreateTag("", LogGroup, lg.InfoLevel)
+	LogTagDebug, _ = lg.CreateTag("", LogGroup, lg.DebugLevel)
+}
 
 func padWithZeros(s string) string {
 	// Adds zeros to opcode
@@ -29,84 +43,84 @@ func valueToUse(code []string, opcodeIndex int, paramIndex int) int {
 		//postion mode
 		index, _ := strconv.Atoi(code[opcodeIndex+paramIndex+1])
 		r, _ := strconv.Atoi(code[index])
-		log.Printf("        Param %v == %-6v (position ). code[%v] has value: %v\n", paramIndex, index, index, r)
+		lg.Print(LogTagDebug, "Param %v == %-6v (position ). code[%v] has value: %v\n", paramIndex, index, index, r)
 		return r
 	}
 
 	// Immediate
 	r, _ := strconv.Atoi(code[opcodeIndex+paramIndex+1])
-	log.Printf("        Param %v == %-6v (immediate).\n", paramIndex, r)
+	lg.Print(LogTagDebug, "Param %v == %-6v (immediate).\n", paramIndex, r)
 	return r
 }
 
 func doInstr1(code []string, opcodeIndex int) (nextOpcodeIndex int) {
-	log.Printf("%+6v: Opcode: %v (ADD)\n", opcodeIndex, code[opcodeIndex])
+	lg.Print(LogTagDebug, "%+6v: Opcode: %v (ADD)\n", opcodeIndex, code[opcodeIndex])
 	a := valueToUse(code, opcodeIndex, 0)
 	b := valueToUse(code, opcodeIndex, 1)
 	targetIndex, _ := strconv.Atoi(code[opcodeIndex+3])
 	code[targetIndex] = strconv.Itoa(a + b)
-	log.Printf("        Param 2 == %-6v (output   ). code[%v] set to value: %v (%v + %v)\n", targetIndex, targetIndex, strconv.Itoa(a+b), a, b)
+	lg.Print(LogTagDebug, "Param 2 == %-6v (output   ). code[%v] set to value: %v (%v + %v)\n", targetIndex, targetIndex, strconv.Itoa(a+b), a, b)
 	return opcodeIndex + 4
 }
 
 func doInstr2(code []string, opcodeIndex int) (nextOpcodeIndex int) {
-	log.Printf("%+6v: Opcode: %v (MULTIPLY)\n", opcodeIndex, code[opcodeIndex])
+	lg.Print(LogTagDebug, "%+6v: Opcode: %v (MULTIPLY)\n", opcodeIndex, code[opcodeIndex])
 	a := valueToUse(code, opcodeIndex, 0)
 	b := valueToUse(code, opcodeIndex, 1)
 	targetIndex, _ := strconv.Atoi(code[opcodeIndex+3])
 	code[targetIndex] = strconv.Itoa(a * b)
-	log.Printf("        Param 2 == %-6v (output). code[%v] set to value: %v (%v * %v)\n", targetIndex, targetIndex, strconv.Itoa(a*b), a, b)
+	lg.Print(LogTagDebug, "Param 2 == %-6v (output). code[%v] set to value: %v (%v * %v)\n", targetIndex, targetIndex, strconv.Itoa(a*b), a, b)
 	return opcodeIndex + 4
 }
 
 func doInstr3(code []string, opcodeIndex int, input string) (nextOpcodeIndex int) {
-	log.Printf("%+6v: Opcode: %v (INPUT)\n", opcodeIndex, code[opcodeIndex])
+	lg.Print(LogTagDebug, "%+6v: Opcode: %v (INPUT)\n", opcodeIndex, code[opcodeIndex])
 	targetIndex, _ := strconv.Atoi(code[opcodeIndex+1])
 	code[targetIndex] = input
-	log.Printf("        Input == %v\n", input)
-	log.Printf("        Param 0 == %-6v (output). code[%v] set to value: %v\n", targetIndex, targetIndex, input)
+	lg.Print(LogTagDebug, "Input == %v\n", input)
+	lg.Print(LogTagDebug, "Param 0 == %-6v (output). code[%v] set to value: %v\n", targetIndex, targetIndex, input)
 
 	return opcodeIndex + 2
 }
 
 func doInstr4(code []string, opcodeIndex int) (nextOpcodeIndex int, output int) {
-	log.Printf("%+6v: Opcode: %v (OUTPUT)\n", opcodeIndex, code[opcodeIndex])
+	lg.Print(LogTagDebug, "%+6v: Opcode: %v (OUTPUT)\n", opcodeIndex, code[opcodeIndex])
 	a := valueToUse(code, opcodeIndex, 0)
-	log.Printf(" -> Output: %v\n", a)
+	lg.Print(LogTagDebug, " -> Output: %v\n", a)
 	return opcodeIndex + 2, a
 }
 
 func doInstr5(code []string, opcodeIndex int) (nextOpcodeIndex int) {
-	log.Printf("%+6v: Opcode: %v (JUMP_IF_TRUE)\n", opcodeIndex, code[opcodeIndex])
+	lg.Print(LogTagDebug, "%+6v: Opcode: %v (JUMP_IF_TRUE)\n", opcodeIndex, code[opcodeIndex])
 	a := valueToUse(code, opcodeIndex, 0)
 	b := valueToUse(code, opcodeIndex, 1)
 	if a != 0 {
 		nextOpcodeIndex = b
-		log.Printf("        JUMP to %-6v\n", nextOpcodeIndex)
+		lg.Print(LogTagDebug, "JUMP to %-6v\n", nextOpcodeIndex)
 	} else {
 		nextOpcodeIndex = opcodeIndex + 3
-		log.Printf("        NO JUMP\n")
+		lg.Print(LogTagDebug, "NO JUMP\n")
 
 	}
 	return nextOpcodeIndex
 }
 
 func doInstr6(code []string, opcodeIndex int) (nextOpcodeIndex int) {
-	log.Printf("%+6v: Opcode: %v (JUMP_IF_FALSE)\n", opcodeIndex, code[opcodeIndex])
+	lg.Print(LogTagDebug, "%+6v: Opcode: %v (JUMP_IF_FALSE)\n", opcodeIndex, code[opcodeIndex])
 	a := valueToUse(code, opcodeIndex, 0)
 	b := valueToUse(code, opcodeIndex, 1)
 	if a == 0 {
 		nextOpcodeIndex = b
-		log.Printf("        JUMP to %+6v\n", nextOpcodeIndex)
+		lg.Print(LogTagDebug, "JUMP to %+6v\n", nextOpcodeIndex)
 	} else {
 		nextOpcodeIndex = opcodeIndex + 3
-		log.Printf("        NO JUMP\n")
+		lg.Print(LogTagDebug, "NO JUMP\n")
 	}
 	return nextOpcodeIndex
 }
 
 func doInstr7(code []string, opcodeIndex int) (nextOpcodeIndex int) {
-	log.Printf("%+6v: Opcode: %v (LESS_THAN)\n", opcodeIndex, code[opcodeIndex])
+	lg.Print(LogTagDebug, "%+6v: Opcode: %v (LESS_THAN)\n", opcodeIndex, code[opcodeIndex])
 	a := valueToUse(code, opcodeIndex, 0)
 	b := valueToUse(code, opcodeIndex, 1)
 	targetIndex, _ := strconv.Atoi(code[opcodeIndex+3])
@@ -115,12 +129,12 @@ func doInstr7(code []string, opcodeIndex int) (nextOpcodeIndex int) {
 	} else {
 		code[targetIndex] = string("0")
 	}
-	log.Printf("        Param 3 == %-6v (output). code[%v] set to %v\n", targetIndex, targetIndex, code[targetIndex])
+	lg.Print(LogTagDebug, "Param 3 == %-6v (output). code[%v] set to %v\n", targetIndex, targetIndex, code[targetIndex])
 	return opcodeIndex + 4
 }
 
 func doInstr8(code []string, opcodeIndex int) (nextOpcodeIndex int) {
-	log.Printf("%+6v: Opcode: %v (EQUAL_TO)\n", opcodeIndex, code[opcodeIndex])
+	lg.Print(LogTagDebug, "%+6v: Opcode: %v (EQUAL_TO)\n", opcodeIndex, code[opcodeIndex])
 	a := valueToUse(code, opcodeIndex, 0)
 	b := valueToUse(code, opcodeIndex, 1)
 	targetIndex, _ := strconv.Atoi(code[opcodeIndex+3])
@@ -129,7 +143,7 @@ func doInstr8(code []string, opcodeIndex int) (nextOpcodeIndex int) {
 	} else {
 		code[targetIndex] = string("0")
 	}
-	log.Printf("        Param 3 == %-6v (output). code[%v] set to %v\n", targetIndex, targetIndex, code[targetIndex])
+	lg.Print(LogTagDebug, "Param 3 == %-6v (output). code[%v] set to %v\n", targetIndex, targetIndex, code[targetIndex])
 	return opcodeIndex + 4
 }
 
@@ -158,7 +172,7 @@ func run(code []string, input string) int {
 		case operation == "08":
 			opcodeIndex = doInstr8(code, opcodeIndex)
 		case operation == "99":
-			log.Printf("END OF PROGRAM\n\n")
+			lg.Print(LogTagDebug, "END OF PROGRAM\n\n")
 			return output
 		}
 	}

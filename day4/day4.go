@@ -2,9 +2,24 @@ package day4
 
 import (
 	"fmt"
-	"log"
 	"strconv"
+
+	"github.com/pbavinck/lg"
 )
+
+// LogGroup The default log group this packages logs to
+var LogGroup = "D4"
+
+// LogTagInfo Used to prefix info log items
+var LogTagInfo int
+
+// LogTagDebug Used to prefix debug log items
+var LogTagDebug int
+
+func init() {
+	LogTagInfo, _ = lg.CreateTag("", LogGroup, lg.InfoLevel)
+	LogTagDebug, _ = lg.CreateTag("", LogGroup, lg.DebugLevel)
+}
 
 const rangeStart = 254032
 const rangeEnd = 789860
@@ -59,7 +74,7 @@ func forceIncrease(a int) int {
 func generatePasswords(start, end int, isPart2 bool) int {
 	result := 0
 	b := forceIncrease(start)
-	log.Printf("From: %6v, To:%6v\n", start, end)
+	lg.Print(LogTagDebug, "From: %6v, To:%6v\n", start, end)
 
 	for {
 		if b > end {

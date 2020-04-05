@@ -2,16 +2,30 @@ package day7
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"sync"
 
 	"github.com/pbavinck/AofCode2019/day7/permutation"
 	"github.com/pbavinck/AofCode2019/loader"
 	"github.com/pbavinck/AofCode2019/machines"
+	"github.com/pbavinck/lg"
 )
 
 const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/day7/input.txt"
+
+// LogGroup The default log group this packages logs to
+var LogGroup = "D7"
+
+// LogTagInfo Used to prefix info log items
+var LogTagInfo int
+
+// LogTagDebug Used to prefix debug log items
+var LogTagDebug int
+
+func init() {
+	LogTagInfo, _ = lg.CreateTag("", LogGroup, lg.InfoLevel)
+	LogTagDebug, _ = lg.CreateTag("", LogGroup, lg.DebugLevel)
+}
 
 func tryPhase(data []string, phase string, part1 bool) int {
 	var amplifiers [5]*machines.Computer
@@ -62,7 +76,7 @@ func SolvePart1(data []string) {
 	phases := r.GenerateFor("01234")
 	maxSignal := 0
 
-	log.Printf("Number of phases to try: %v\n", len(phases))
+	lg.Print(LogTagInfo, "Number of phases to try: %v\n", len(phases))
 
 	for _, phase := range phases {
 		output := tryPhase(data, phase, true)
@@ -79,7 +93,7 @@ func SolvePart2(data []string) {
 	phases := r.GenerateFor("56789")
 	maxSignal := 0
 
-	log.Printf("Number of phases to try: %v\n", len(phases))
+	lg.Print(LogTagInfo, "Number of phases to try: %v\n", len(phases))
 
 	for _, phase := range phases {
 		output := tryPhase(data, phase, false)

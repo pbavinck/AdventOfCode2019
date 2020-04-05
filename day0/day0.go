@@ -4,9 +4,24 @@ import (
 	"fmt"
 
 	"github.com/pbavinck/AofCode2019/loader"
+	"github.com/pbavinck/lg"
 )
 
 const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/dayXXX/input.txt"
+
+// LogGroup The default log group this packages logs to
+var LogGroup = "DXXX"
+
+// LogTagInfo Used to prefix info log items
+var LogTagInfo int
+
+// LogTagDebug Used to prefix debug log items
+var LogTagDebug int
+
+func init() {
+	LogTagInfo, _ = lg.CreateTag("", LogGroup, lg.InfoLevel)
+	LogTagDebug, _ = lg.CreateTag("", LogGroup, lg.DebugLevel)
+}
 
 //SolvePart1 solves part 1 of day XXX
 func SolvePart1(data []string) {

@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"strconv"
 
+	"github.com/pbavinck/AofCode2019/math2"
 	"github.com/pbavinck/AofCode2019/loader"
 )
 
@@ -33,13 +34,6 @@ type jupiterMoons struct {
 	moons []aMoon
 }
 
-func intAbs(a int) int {
-	if a < 0 {
-		return -a
-	}
-	return a
-}
-
 func newMoons(data []string) *jupiterMoons {
 	j := jupiterMoons{}
 	j.moons = make([]aMoon, 4)
@@ -60,8 +54,8 @@ func newMoons(data []string) *jupiterMoons {
 func (m *aMoon) energy() int {
 	p := m.position
 	v := m.velocity
-	pot := intAbs(p.x) + intAbs(p.y) + intAbs(p.z)
-	kin := intAbs(v.x) + intAbs(v.y) + intAbs(v.z)
+	pot := math2.IntAbs(p.x) + math2.IntAbs(p.y) + math2.IntAbs(p.z)
+	kin := math2.IntAbs(v.x) + math2.IntAbs(v.y) + math2.IntAbs(v.z)
 	return pot * kin
 }
 
@@ -181,27 +175,6 @@ func (j *jupiterMoons) findStep(dim string) (step int64) {
 	return
 }
 
-// GCD greatest common divisor via Euclidean algorithm
-func GCD(a, b int64) int64 {
-	for b != 0 {
-		t := b
-		b = a % b
-		a = t
-	}
-	return a
-}
-
-// LCM find Least Common Multiple via GCD
-func LCM(a, b int64, integers ...int64) int64 {
-	var result, i int64
-	result = a * b / GCD(a, b)
-
-	for i = 0; i < int64(len(integers)); i++ {
-		result = LCM(result, integers[i])
-	}
-	return result
-}
-
 //SolvePart1 solves part 1 of day 12
 func SolvePart1(data []string) {
 	j := newMoons(data)
@@ -216,7 +189,7 @@ func SolvePart2(data []string) {
 	ySteps := j.findStep("y")
 	zSteps := j.findStep("z")
 
-	fmt.Println("Part 2 - Answer:", LCM(xSteps, ySteps, zSteps))
+	fmt.Println("Part 2 - Answer:", math2.LCM(xSteps, ySteps, zSteps))
 }
 
 // Solve runs day 12 assignment

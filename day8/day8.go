@@ -2,12 +2,26 @@ package day8
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/pbavinck/AofCode2019/loader"
+	"github.com/pbavinck/lg"
 )
 
 const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/day8/input.txt"
+
+// LogGroup The default log group this packages logs to
+var LogGroup = "D8"
+
+// LogTagInfo Used to prefix info log items
+var LogTagInfo int
+
+// LogTagDebug Used to prefix debug log items
+var LogTagDebug int
+
+func init() {
+	LogTagInfo, _ = lg.CreateTag("", LogGroup, lg.InfoLevel)
+	LogTagDebug, _ = lg.CreateTag("", LogGroup, lg.DebugLevel)
+}
 
 type anImage struct {
 	width      int
@@ -39,7 +53,7 @@ func newImage(data string, width int, height int) *anImage {
 		}
 	}
 
-	log.Printf("%v layers loaded\n", img.layerCount)
+	lg.Print(LogTagDebug, "%v layers loaded\n", img.layerCount)
 	return &img
 }
 
@@ -60,7 +74,7 @@ func (img *anImage) fewest0Digits() (fewestZeros, bestLayer int) {
 			bestLayer = l
 		}
 	}
-	log.Printf("Layer %v has the fewest zeros: %v\n", bestLayer, fewestZeros)
+	lg.Print(LogTagDebug, "Layer %v has the fewest zeros: %v\n", bestLayer, fewestZeros)
 	return
 }
 
@@ -76,7 +90,7 @@ func (img *anImage) multiply1x2(l int) int {
 			}
 		}
 	}
-	log.Printf("Layer %v has %v 1's and %v 2's -> 1's X 2's = %v\n", l, ones, twos, ones*twos)
+	lg.Print(LogTagDebug, "Layer %v has %v 1's and %v 2's -> 1's X 2's = %v\n", l, ones, twos, ones*twos)
 	return ones * twos
 }
 

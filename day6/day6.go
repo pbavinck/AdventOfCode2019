@@ -2,12 +2,26 @@ package day6
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/pbavinck/AofCode2019/loader"
+	"github.com/pbavinck/lg"
 )
 
 const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/day6/input.txt"
+
+// LogGroup The default log group this packages logs to
+var LogGroup = "D6"
+
+// LogTagInfo Used to prefix info log items
+var LogTagInfo int
+
+// LogTagDebug Used to prefix debug log items
+var LogTagDebug int
+
+func init() {
+	LogTagInfo, _ = lg.CreateTag("", LogGroup, lg.InfoLevel)
+	LogTagDebug, _ = lg.CreateTag("", LogGroup, lg.DebugLevel)
+}
 
 type objectInfo struct {
 	name         string
@@ -48,7 +62,7 @@ func (u aUniverse) calculateJumpsToSanta() {
 				if jumpsToSanta >= 0 {
 					jumpsToSanta++
 					object.jumpsToSanta = jumpsToSanta
-					log.Printf("%3v orbits %3v %+6v jumps to Santa", object.name, object.orbits, object.jumpsToSanta)
+					lg.Print(LogTagDebug, "%3v orbits %3v %+6v jumps to Santa", object.name, object.orbits, object.jumpsToSanta)
 				}
 			}
 
@@ -82,7 +96,7 @@ func (u aUniverse) countJumpsToSanta() int {
 	jumps := 1 // for consistency with Santa to Planet jump being counted as 1
 	for {
 		if o.jumpsToSanta != -1 {
-			log.Printf("Jump %v, arrived at %v and found %v jumps to Santa", jumps, o.name, o.jumpsToSanta)
+			lg.Print(LogTagDebug, "Jump %v, arrived at %v and found %v jumps to Santa", jumps, o.name, o.jumpsToSanta)
 			return o.jumpsToSanta + jumps
 		}
 		jumps++

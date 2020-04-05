@@ -1,9 +1,10 @@
 package day10
 
 import (
-	"log"
 	"reflect"
 	"testing"
+
+	"github.com/pbavinck/lg"
 )
 
 func Test_getVector(t *testing.T) {
@@ -94,7 +95,7 @@ func Test_asteroidField_markBlockedAsteroids(t *testing.T) {
 			if e {
 				a.log("Got:")
 
-				log.Println("Should be:")
+				lg.Print(LogTagDebug, "Should be:")
 				a := &asteroidField{
 					xSize:  tt.fields.xSize,
 					ySize:  tt.fields.ySize,
@@ -238,13 +239,13 @@ func Test_findPosition(t *testing.T) {
 			gotBestLocation, gotBestSeen := findPosition(tt.args.data)
 			if !reflect.DeepEqual(gotBestLocation, tt.wantBestLocation) {
 				t.Errorf("findPosition() gotBestLocation = %v, want %v", gotBestLocation, tt.wantBestLocation)
-				log.Println("Received:", gotBestSeen)
+				lg.Print(LogTagDebug, "Received: %v", gotBestSeen)
 				a := newField(tt.args.data)
 				a.setLocation(gotBestLocation, "\u2588")
 				a.sensor = gotBestLocation
 				a.markBlockedAsteroids()
 				a.log("Got:")
-				log.Println("Should be:", tt.wantObserved)
+				lg.Print(LogTagDebug, "Should be: %v", tt.wantObserved)
 				a = newField(tt.args.data)
 				a.setLocation(tt.wantBestLocation, "\u2588")
 				a.sensor = tt.wantBestLocation

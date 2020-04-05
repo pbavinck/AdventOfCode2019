@@ -2,14 +2,28 @@ package day10
 
 import (
 	"fmt"
-	"log"
 	"sort"
 	"strings"
 
 	"github.com/pbavinck/AofCode2019/loader"
+	"github.com/pbavinck/lg"
 )
 
 const inputFile = "/Users/pbavinck/Automation/golang/src/github.com/pbavinck/AofCode2019/day10/input.txt"
+
+// LogGroup The default log group this packages logs to
+var LogGroup = "D10"
+
+// LogTagInfo Used to prefix info log items
+var LogTagInfo int
+
+// LogTagDebug Used to prefix debug log items
+var LogTagDebug int
+
+func init() {
+	LogTagInfo, _ = lg.CreateTag("", LogGroup, lg.InfoLevel)
+	LogTagDebug, _ = lg.CreateTag("", LogGroup, lg.DebugLevel)
+}
 
 type coord struct {
 	x int
@@ -56,12 +70,11 @@ func newField(data []string) *asteroidField {
 }
 
 func (a *asteroidField) log(title string) {
-	log.Println(title)
-	log.Println(strings.Repeat("-", 4*a.xSize))
+	lg.Print(LogTagDebug, "%v", title)
+	lg.Print(LogTagDebug, "%v", strings.Repeat("-", 4*a.xSize))
 	for y := 0; y < a.ySize; y++ {
 		s := ""
 		for x := 0; x < a.xSize; x++ {
-			// log.Println(a.field[y])
 			c := coord{x: x, y: y}
 			switch {
 			case c == a.sensor:
@@ -72,8 +85,7 @@ func (a *asteroidField) log(title string) {
 				s = s + fmt.Sprintf("%+4v", a.getLocation(c))
 			}
 		}
-		log.Print(s)
-		// log.Printf("\n")
+		lg.Print(LogTagDebug, "%v", s)
 	}
 }
 
@@ -271,21 +283,20 @@ func findPosition(data []string) (bestLocation coord, bestObserved int) {
 }
 
 func (a *asteroidField) printTargets(title string) {
-	log.Printf("\nPRINT TARGETS: %v\n", title)
+	lg.Print(LogTagDebug, "\nPRINT TARGETS: %v\n", title)
 	a.log("at printTargets")
 	i := 0
 	for j, t := range a.targets {
 		if a.directions[t] != 0.0 {
 			if a.getLocation(t) == "#" {
-				log.Printf("%+3v [%v] - %+v, direction: %.3f\n", j, a.getLocation(t), t, a.directions[t])
+				lg.Print(LogTagDebug, "%+3v [%v] - %+v, direction: %.3f\n", j, a.getLocation(t), t, a.directions[t])
 			} else {
-				log.Printf("%v [%v] - %+v, direction: %.3f (blocked)\n", j, a.getLocation(t), t, a.directions[t])
+				lg.Print(LogTagDebug, "%v [%v] - %+v, direction: %.3f (blocked)\n", j, a.getLocation(t), t, a.directions[t])
 			}
 			i++
 		}
 	}
-	log.Printf("Target count: %v\n", i)
-	a.log("at printTargets")
+	lg.Print(LogTagDebug, "Target count: %v\n", i)
 }
 
 func (a *asteroidField) findTargets() {
@@ -330,16 +341,15 @@ func (a *asteroidField) fire360() int {
 func (a *asteroidField) keepFiring() {
 	hit := 0
 	round := 1
-	log.Print("Asteroids to clear:", a.aSize-1)
-	a.log("Before firing")
+	lg.Print(LogTagInfo, "Asteroids to clear:  %v", a.aSize-1)
 	for {
 		if hit >= a.aSize-1 { // we don't shoot the sensor asteroid
 			break
 		}
-		log.Print("Round:", round)
+		lg.Print(LogTagInfo, "Round: %v", round)
 		hit += a.fire360()
 		a.log("")
-		log.Print("Hits so far:", hit)
+		lg.Print(LogTagInfo, "Hits so far: %v", hit)
 		round++
 	}
 }
