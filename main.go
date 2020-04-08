@@ -17,11 +17,12 @@ import (
 	"github.com/pbavinck/AofCode2019/day12"
 	"github.com/pbavinck/AofCode2019/day13"
 	"github.com/pbavinck/AofCode2019/day14"
+	"github.com/pbavinck/AofCode2019/day15"
 )
 
 func main() {
 	// lg.Enable()
-	// lg.SetLevel(lg.InfoLevel)
+	// lg.SetLevel(lg.DebugLevel)
 
 	day01.Solve()
 	day02.Solve()
@@ -39,6 +40,7 @@ func main() {
 	day12.Solve()
 	day13.Solve()
 	day14.Solve()
+	day15.Solve()
 
 	// Computer days
 	// day02a.Solve()
