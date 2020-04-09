@@ -44,3 +44,18 @@ func LCM(a, b int64, integers ...int64) int64 {
 	}
 	return result
 }
+
+// IntPow computes a**b using binary powering algorithm
+// See Donald Knuth, The Art of Computer Programming, Volume 2, Section 4.6.3
+// Source: https://groups.google.com/d/msg/golang-nuts/PnLnr4bc9Wo/z9ZGv2DYxXoJ
+func IntPow(a, b int64) int64 {
+	var p int64 = 1
+	for b > 0 {
+		if b&1 != 0 {
+			p *= a
+		}
+		b >>= 1
+		a *= a
+	}
+	return p
+}

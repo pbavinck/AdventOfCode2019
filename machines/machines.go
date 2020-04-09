@@ -217,27 +217,27 @@ func (c *Computer) Run(wg *sync.WaitGroup) string {
 		c.program[line] = padWithZeros(c.program[line])
 		opcode := c.program[line]
 		operation := opcode[len(opcode)-2:]
-		switch {
-		case operation == "01":
+		switch operation {
+		case "01":
 			line = c.add(line)
-		case operation == "02":
+		case "02":
 			line = c.multiply(line)
-		case operation == "03":
+		case "03":
 			line = c.in(line, <-c.Input)
-		case operation == "04":
+		case "04":
 			line, output = c.out(line)
 			c.Output <- strconv.Itoa(output)
-		case operation == "05":
+		case "05":
 			line = c.jumpIfTrue(line)
-		case operation == "06":
+		case "06":
 			line = c.jumpIfFalse(line)
-		case operation == "07":
+		case "07":
 			line = c.lessThan(line)
-		case operation == "08":
+		case "08":
 			line = c.equal(line)
-		case operation == "09":
+		case "09":
 			line = c.base(line)
-		default:
+		default: // 99 or something else
 			if wg != nil {
 				wg.Done()
 			}
