@@ -87,7 +87,7 @@ func (c *Computer) getTargetIndex(line int, paramIndex int) int {
 		return index
 	}
 
-	log.Fatal("Invalid param mode for terget index")
+	log.Fatal("Invalid param mode for target index")
 	return -1
 }
 
@@ -266,10 +266,8 @@ func NewComputer(name string, data []string, memorySize int) *Computer {
 		name:         name,
 		program:      strings.Split(data[0], ","),
 		relativeBase: 0,
-		// make the channels have 2 capacity, because day 7 requires, phase and input signal to be passed
-		Input: make(chan string, 2),
-		// make the channels have 2 capacity, because day 7 requires it
-		Output: make(chan string, 2),
+		Input:        make(chan string, 100),
+		Output:       make(chan string, 2),
 	}
 	if memorySize > len(c.program) {
 		c.program = append(c.program, make([]string, memorySize-len(c.program))...)

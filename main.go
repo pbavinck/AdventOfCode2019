@@ -19,6 +19,7 @@ import (
 	"github.com/pbavinck/AofCode2019/day14"
 	"github.com/pbavinck/AofCode2019/day15"
 	"github.com/pbavinck/AofCode2019/day16"
+	"github.com/pbavinck/AofCode2019/day17"
 )
 
 func main() {
@@ -43,6 +44,7 @@ func main() {
 	day14.Solve()
 	day15.Solve()
 	day16.Solve()
+	day17.Solve()
 
 	// Computer days
 	// day02a.Solve()
@@ -51,4 +53,6 @@ func main() {
 	// day09.Solve()
 	// day11.Solve()
 	// day13.Solve()
+	// day15.Solve()
+	// day17.Solve()
 }
